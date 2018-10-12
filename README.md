@@ -1,2 +1,2 @@
-# 3-minutes
-A simple 3-minute timer Android app
+# 3 Minutes
+A simple 3-minute timer Android app.
