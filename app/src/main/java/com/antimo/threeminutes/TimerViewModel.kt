@@ -7,9 +7,9 @@ import java.util.concurrent.TimeUnit
 
 class TimerViewModel : ViewModel() {
 
-    private lateinit var running: MutableLiveData<Boolean>
+    private lateinit var timerStatus: MutableLiveData<TimerStatus>
     private lateinit var timer: MutableLiveData<Long>
-    private lateinit var status: MutableLiveData<FoodStatus>
+    private lateinit var foodStatus: MutableLiveData<FoodStatus>
 
     private val timerHandler: Handler = Handler()
     private lateinit var timerRunnable: Runnable
@@ -19,12 +19,7 @@ class TimerViewModel : ViewModel() {
             timer.postValue(timer.value?.minus(1))
 
             val secondsLeft = timer.value!!
-            when {
-                secondsLeft > 120 -> status.value = FoodStatus.RAW
-                secondsLeft > 30 -> status.value = FoodStatus.CRUNCHY
-                secondsLeft > -30 -> status.value = FoodStatus.COOKED
-                else -> status.value = FoodStatus.SOGGY
-            }
+            foodStatus.value = FoodStatus.getStatus(secondsLeft)
 
             timerHandler.postDelayed(timerRunnable, TimeUnit.SECONDS.toMillis(1))
         }
@@ -35,12 +30,12 @@ class TimerViewModel : ViewModel() {
         timerHandler.removeCallbacks(timerRunnable)
     }
 
-    fun isRunning(): MutableLiveData<Boolean> {
-        if (!::running.isInitialized) {
-            running = MutableLiveData()
-            running.value = false
+    fun getTimerStatus(): MutableLiveData<TimerStatus> {
+        if (!::timerStatus.isInitialized) {
+            timerStatus = MutableLiveData()
+            timerStatus.value = TimerStatus.RESET
         }
-        return running
+        return timerStatus
     }
 
     fun getTimer(): MutableLiveData<Long> {
@@ -51,27 +46,27 @@ class TimerViewModel : ViewModel() {
         return timer
     }
 
-    fun getStatus(): MutableLiveData<FoodStatus> {
-        if (!::status.isInitialized) {
-            status = MutableLiveData()
-            status.value = FoodStatus.RAW
+    fun getFoodStatus(): MutableLiveData<FoodStatus> {
+        if (!::foodStatus.isInitialized) {
+            foodStatus = MutableLiveData()
+            foodStatus.value = FoodStatus.RAW
         }
-        return status
+        return foodStatus
     }
 
     fun reset() {
-        running.value = false
+        timerStatus.value = TimerStatus.RESET
         timer.value = TimeUnit.MINUTES.toSeconds(3)
-        status.value = FoodStatus.RAW
+        foodStatus.value = FoodStatus.RAW
     }
 
     fun start() {
-        running.value = true
+        timerStatus.value = TimerStatus.START
         timerHandler.postDelayed(timerRunnable, TimeUnit.SECONDS.toMillis(1))
     }
 
     fun stop() {
-        running.value = false
+        timerStatus.value = TimerStatus.STOP
         timerHandler.removeCallbacks(timerRunnable)
     }
 }
