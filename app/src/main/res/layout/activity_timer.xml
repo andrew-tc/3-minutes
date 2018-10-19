@@ -23,6 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:textColor="@android:color/black"
+        android:textSize="40sp"
+        app:fontFamily="@font/gloria_hallelujah"
         tools:text="@tools:sample/lorem" />
 
     <RelativeLayout
@@ -46,17 +49,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:textColor="@android:color/black"
             android:textSize="30sp"
-            app:fontFamily="sans-serif-smallcaps"
+            app:fontFamily="@font/gloria_hallelujah"
             tools:text="@tools:sample/date/hhmmss" />
     </RelativeLayout>
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="@string/start" />
+        android:background="@drawable/button"
+        android:text="@string/start"
+        android:textSize="30sp"
+        app:fontFamily="@font/gloria_hallelujah" />
 
 </RelativeLayout>

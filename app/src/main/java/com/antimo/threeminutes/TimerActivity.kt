@@ -1,7 +1,10 @@
 package com.antimo.threeminutes
 
 import android.graphics.Color
+import android.media.AudioAttributes
+import android.media.AudioManager
 import android.media.MediaPlayer
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -10,10 +13,6 @@ import kotlinx.android.synthetic.main.activity_timer.*
 import org.jetbrains.anko.sdk15.listeners.onClick
 import java.util.*
 import kotlin.math.absoluteValue
-import android.media.AudioManager
-import android.media.AudioAttributes
-import android.os.Build
-
 
 class TimerActivity : AppCompatActivity() {
 
